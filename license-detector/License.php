@@ -2,7 +2,7 @@
 /**
  * @package php-license-detector
  * @author Sami "SychO" Mazouz
- * @version 1.0
+ * @version 1.0.1
  * @license MIT
  */
 
@@ -68,12 +68,31 @@ class License
     /**
      * @var string
      */
+	public $nickname;
+
+    /**
+     * @var array
+     */
     public $using = [];
 
     /**
      * @var array
      */
     public $rules = [];
+
+    /**
+     * @var array
+     */
+	public $permissions = [];
+
+    /**
+     * @var array
+     */
+	public $conditions = [];
+    /**
+     * @var array
+     */
+	public $limitations = [];
 
     /**
      * @var float
