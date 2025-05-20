@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package php-license-detector
  * @author Sami "SychO" Mazouz
@@ -13,96 +14,93 @@ namespace LicenseDetector;
  */
 class RuleType
 {
-    /**
-     * @var string
-     */
-    protected $name;
+	/**
+	 * @var string
+	 */
+	protected $name;
 
-    /**
-     * @var string
-     */
-    protected $rules = [];
+	/**
+	 * @var string
+	 */
+	protected $rules = [];
 
-    /**
-     * Constructor
-     * @param string $name
-     * @param array $rules (optional)
-     */
-    public function __construct(string $name, array $rules = null)
-    {
-        $this->name = $name;
+	/**
+	 * Constructor
+	 * @param string $name
+	 * @param array $rules (optional)
+	 */
+	public function __construct(string $name, ?array $rules = null)
+	{
+		$this->name = $name;
 
-        if (!empty($rules))
-            $this->fillRules($rules);
-    }
+		if (!empty($rules)) {
+			$this->fillRules($rules);
+		}
+	}
 
-    /**
-     * @param array $rules
-     * @return void
-     */
-    public function fillRules(array $rules)
-    {
-        if (empty($rules))
-            return;
+	/**
+	 * @param array $rules
+	 */
+	public function fillRules(array $rules)
+	{
+		if (empty($rules)) {
+			return;
+		}
 
-        foreach ($rules as $rule)
-        {
-            $r = new Rule(
-                $rule['tag'] ?? null,
-                $rule['description'] ?? null,
-                $rule['label'] ?? null,
-                $this
-            );
-            $r->setValue($rule['value'] ?? false);
+		foreach ($rules as $rule) {
+			$r = new Rule(
+				$rule['tag'] ?? null,
+				$rule['description'] ?? null,
+				$rule['label'] ?? null,
+				$this,
+			);
+			$r->setValue($rule['value'] ?? false);
 
-            if (!empty($rule['tag']))
-                $this->rules[$rule['tag']] = $r;
-            else
-                $this->rules[] = $r;
-        }
-    }
+			if (!empty($rule['tag'])) {
+				$this->rules[$rule['tag']] = $r;
+			} else {
+			$this->rules[] = $r;
+			}
+		}
+	}
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+	/**
+	 * @return string
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
 
-    /**
-     * @return string
-     */
-    public function getRules()
-    {
-        return $this->rules;
-    }
+	/**
+	 * @return string
+	 */
+	public function getRules()
+	{
+		return $this->rules;
+	}
 
-    /**
-     * @return void
-     */
-    public function setRules(array $rules)
-    {
-        $this->rules = $rules;
-    }
+	/**
+	 */
+	public function setRules(array $rules)
+	{
+		$this->rules = $rules;
+	}
 
-    /**
-     * @param LicenseDetector\RuleType $rule_type
-     * @return bool
-     */
-    public function equals(RuleType $rule_type)
-    {
-        if ($this->name === $rule_type->name)
-            return true;
+	/**
+	 * @param LicenseDetector\RuleType $rule_type
+	 * @return bool
+	 */
+	public function equals(RuleType $rule_type)
+	{
+		return (bool) ($this->name === $rule_type->name);
+	}
 
-        return false;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getName();
-    }
+	/**
+	 * @return string
+	 */
+	public function __toString()
+	{
+		return $this->getName();
+	}
 }

@@ -4,6 +4,9 @@
     "description": "License Type Detector",
     "authors": [
         {
+            "name": "jdarwood007"
+        },
+        {
             "name": "Sami 'SychO' Mazouz",
             "homepage": "https://sycho9.github.io"
         },
@@ -17,10 +20,11 @@
     "homepage": "https://sycho9.github.io",
     "require": {
         "php": ">=7.2.0",
-        "symfony/yaml": "^4.3.3"
+        "symfony/yaml": "^5.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8"
+        "friendsofphp/php-cs-fixer": "^3.46",
+        "overtrue/phplint": "^9.0.4"
     },
     "autoload": {
         "psr-4": {
@@ -28,5 +32,9 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "scripts": {
+        "lint": "php-cs-fixer check --diff --config .php-cs-fixer.dist.php --path-mode=intersection $(git diff --name-only \"*.php\")",
+        "lint-fix": "php-cs-fixer fix -v --config .php-cs-fixer.dist.php --path-mode=intersection $(git diff --name-only \"*.php\")"
+    }
 }

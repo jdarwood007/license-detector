@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package php-license-detector
  * @author Sami "SychO" Mazouz
@@ -16,265 +17,268 @@ use Symfony\Component\Yaml\Yaml;
 #[AllowDynamicProperties]
 class License extends \stdClass
 {
-    /**
-     * @var string
-     */
-    protected $contents;
+	/**
+	 * @var string
+	 */
+	public $title;
 
-    /**
-     * @var string
-     */
-    protected $body;
+	/**
+	 * @var string
+	 */
+	public $spdx_id;
 
-    /**
-     * @var string
-     */
-    public $title;
+	/**
+	 * @var string
+	 */
+	public $redirect_from;
 
-    /**
-     * @var string
-     */
-    public $spdx_id;
+	/**
+	 * @var string
+	 */
+	public $featured;
 
-    /**
-     * @var string
-     */
-    public $redirect_from;
+	/**
+	 * @var string
+	 */
+	public $hidden;
 
-    /**
-     * @var string
-     */
-    public $featured;
+	/**
+	 * @var string
+	 */
+	public $description;
 
-    /**
-     * @var string
-     */
-    public $hidden;
+	/**
+	 * @var string
+	 */
+	public $how;
 
-    /**
-     * @var string
-     */
-    public $description;
+	/**
+	 * @var string
+	 */
+	public $note;
 
-    /**
-     * @var string
-     */
-    public $how;
-
-    /**
-     * @var string
-     */
-    public $note;
-
-    /**
-     * @var string
-     */
+	/**
+	 * @var string
+	 */
 	public $nickname;
 
-    /**
-     * @var array
-     */
-    public $using = [];
+	/**
+	 * @var array
+	 */
+	public $using = [];
 
-    /**
-     * @var array
-     */
-    public $rules = [];
+	/**
+	 * @var array
+	 */
+	public $rules = [];
 
-    /**
-     * @var array
-     */
+	/**
+	 * @var array
+	 */
 	public $permissions = [];
 
-    /**
-     * @var array
-     */
+	/**
+	 * @var array
+	 */
 	public $conditions = [];
-    /**
-     * @var array
-     */
+
+	/**
+	 * @var array
+	 */
 	public $limitations = [];
 
-    /**
-     * @var float
-     */
-    public $stats = [];
+	/**
+	 * @var float
+	 */
+	public $stats = [];
 
-    /**
-     * Constructor
-     *
-     * @param string $contents
-     */
-    public function __construct(string $contents = null)
-    {
-        if (!empty($contents))
-        {
-            $this->contents = $contents;
-            $this->parse();
-        }
-    }
+	/**
+	 * @var string
+	 */
+	protected $contents;
 
-    /**
-     * @return string
-     */
-    public function getContents()
-    {
-        return $this->contents;
-    }
+	/**
+	 * @var string
+	 */
+	protected $body;
 
-    /**
-     * @return string
-     */
-    public function getBody()
-    {
-        return $this->body;
-    }
+	/**
+	 * Constructor
+	 *
+	 * @param string $contents
+	 */
+	public function __construct(?string $contents = null)
+	{
+		if (!empty($contents)) {
+			$this->contents = $contents;
+			$this->parse();
+		}
+	}
 
-    /**
-     * @return string
-     */
-    public function setBody(string $body)
-    {
-        $this->body = $body;
-    }
+	/**
+	 * @return string
+	 */
+	public function getContents()
+	{
+		return $this->contents;
+	}
 
-    /**
-     * @var string
-     */
-    public function getCleanBody()
-    {
-        return substr(preg_replace('/\s/s', '', $this->body), 0, 1000);
-    }
+	/**
+	 * @return string
+	 */
+	public function getBody()
+	{
+		return $this->body;
+	}
 
-    /**
-     * @return array
-     */
-    public function getAllRules()
-    {
-        $rules = [];
+	/**
+	 * @return string
+	 */
+	public function setBody(string $body)
+	{
+		$this->body = $body;
+	}
 
-        foreach ($this->rules as $type)
-            $rules += $type->rules;
+	/**
+	 * @var string
+	 */
+	public function getCleanBody()
+	{
+		return substr(preg_replace('/\s/s', '', $this->body), 0, 1000);
+	}
 
-        return $rules;
-    }
+	/**
+	 * @return array
+	 */
+	public function getAllRules()
+	{
+		$rules = [];
 
-    /**
-     * @return void
-     */
-    public function parse()
-    {
-        preg_match_all('/---\s(.*)\n---\s+(.*)/s', $this->contents, $matches, PREG_SET_ORDER, 0);
+		foreach ($this->rules as $type) {
+			$rules += $type->rules;
+		}
 
-        if (!empty($matches[0][2]))
-            $this->body = $matches[0][2];
+		return $rules;
+	}
 
-        if (!empty($matches[0][1]))
-        {
-            try {
-                $this->setAdvanced(Yaml::parse($matches[0][1]));
-            } catch(\Exception $e) {
-                echo ('Could not parse yaml content.');
-            }
-        }
+	/**
+	 */
+	public function parse()
+	{
+		preg_match_all('/---\s(.*)\n---\s+(.*)/s', $this->contents, $matches, PREG_SET_ORDER, 0);
 
-        if (empty($matches))
-        {
-            $this->body = $this->contents;
-            $this->matchToLicense();
-        }
-    }
+		if (!empty($matches[0][2])) {
+			$this->body = $matches[0][2];
+		}
 
-    /**
-     * @param array $data
-     * @return void
-     */
-    public function setAdvanced(array $data)
-    {
-        foreach ($data as $k => $v)
-            $this->{str_replace('-', '_', $k)} = $v;
+		if (!empty($matches[0][1])) {
+			try {
+				$this->setAdvanced(Yaml::parse($matches[0][1]));
+			} catch (\Exception $e) {
+				echo('Could not parse yaml content.');
+			}
+		}
 
-        $this->fillRules($data);
-    }
+		if (empty($matches)) {
+			$this->body = $this->contents;
+			$this->matchToLicense();
+		}
+	}
 
-    /**
-     * @param array $data
-     * @return void
-     */
-    public function fillRules(array $data)
-    {
-        foreach (Rule::TYPES as $type)
-        {
-            if (!isset($data[$type]))
-                continue;
+	/**
+	 * @param array $data
+	 */
+	public function setAdvanced(array $data)
+	{
+		foreach ($data as $k => $v) {
+			$this->{str_replace('-', '_', $k)} = $v;
+		}
 
-            $this->rules[$type] = new RuleType($type);
+		$this->fillRules($data);
+	}
 
-            $rules = [];
-            foreach (Detector::$rules as $rule)
-                if (in_array($rule->getTag(), $data[$type]))
-                    $rules[$rule->getTag()] = $rule;
+	/**
+	 * @param array $data
+	 */
+	public function fillRules(array $data)
+	{
+		foreach (Rule::TYPES as $type) {
+			if (!isset($data[$type])) {
+				continue;
+			}
 
-            $this->rules[$type]->setRules($rules);
-        }
-    }
+			$this->rules[$type] = new RuleType($type);
 
-    /**
-     * @return void
-     */
-    public function matchToLicense()
-    {
-        foreach (Detector::$licenses as $license)
-        {
-            similar_text($this->getCleanBody(), $license->getCleanBody(), $percent);
+			$rules = [];
 
-            if (!empty($this->stats['highest_percentage']) && $percent < $this->stats['highest_percentage'])
-                continue;
+			foreach (Detector::$rules as $rule) {
+				if (in_array($rule->getTag(), $data[$type])) {
+					$rules[$rule->getTag()] = $rule;
+				}
+			}
 
-            $this->stats['highest_match'] = $license;
-            $this->stats['highest_percentage'] = $percent;
-            if ($this->stats['highest_percentage'] > 90)
-            {
-                $data = [];
-                foreach ($license as $key => $property)
-                    if ($key !== 'contents' && $key !== 'body')
-                        $data[$key] = $property;
+			$this->rules[$type]->setRules($rules);
+		}
+	}
 
-                unset($data['stats']);
+	/**
+	 */
+	public function matchToLicense()
+	{
+		foreach (Detector::$licenses as $license) {
+			similar_text($this->getCleanBody(), $license->getCleanBody(), $percent);
 
-                $this->setAdvanced($data);
-                $this->stats['percentage'] = $percent;
-                break;
-            }
-        }
-    }
+			if (!empty($this->stats['highest_percentage']) && $percent < $this->stats['highest_percentage']) {
+				continue;
+			}
 
-    /**
-     * @return bool
-     */
-    public function isValid()
-    {
-        return !empty($this->title);
-    }
+			$this->stats['highest_match'] = $license;
+			$this->stats['highest_percentage'] = $percent;
 
-    /**
-     * @return string
-     */
-    public function printDebug()
-    {
-        $echo = "\nMatched: " . ($this->title ?? '<em>None</em>') . "\n";
-        $echo .= 'Percentage: ' . ($this->stats['percentage'] ?? '0') . "%\n\n";
-        $echo .= 'Highest match: ' . ($this->stats['highest_match']->title ?? '<em>None</em>') . "\n";
-        $echo .= 'Percentage: ' . ($this->stats['highest_percentage'] ?? '0') . "%";
+			if ($this->stats['highest_percentage'] > 90) {
+				$data = [];
 
-        echo $echo;
-    }
+				foreach ($license as $key => $property) {
+					if ($key !== 'contents' && $key !== 'body') {
+						$data[$key] = $property;
+					}
+				}
 
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->title;
-    }
+				unset($data['stats']);
+
+				$this->setAdvanced($data);
+				$this->stats['percentage'] = $percent;
+				break;
+			}
+		}
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isValid()
+	{
+		return !empty($this->title);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function printDebug()
+	{
+		$echo = "\nMatched: " . ($this->title ?? '<em>None</em>') . "\n";
+		$echo .= 'Percentage: ' . ($this->stats['percentage'] ?? '0') . "%\n\n";
+		$echo .= 'Highest match: ' . ($this->stats['highest_match']->title ?? '<em>None</em>') . "\n";
+		$echo .= 'Percentage: ' . ($this->stats['highest_percentage'] ?? '0') . '%';
+
+		echo $echo;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function __toString()
+	{
+		return $this->title;
+	}
 }
