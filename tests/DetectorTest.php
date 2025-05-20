@@ -10,7 +10,7 @@ final class DetectorTest extends TestCase
 	/**
 	 * @var LicenseDetector\Detector
 	 */
-	private $detector;
+	private ?Detector $detector;
 
 	/**
 	 */
