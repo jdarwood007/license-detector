@@ -17,7 +17,7 @@ class Rule
 	/**
 	 * @var array
 	 */
-	public const array TYPES = ['permissions', 'limitations', 'conditions'];
+	public const TYPES = ['permissions', 'limitations', 'conditions'];
 
 	/**
 	 * @var LicenseDetector\RuleType
