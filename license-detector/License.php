@@ -13,7 +13,8 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Instantiates a license and matches it to the list of existing licenses
  */
-class License
+#[AllowDynamicProperties]
+class License extends \stdClass
 {
     /**
      * @var string
