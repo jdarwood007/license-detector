@@ -3,7 +3,7 @@
 /**
  * @package php-license-detector
  * @author Sami "SychO" Mazouz
- * @version 1.0
+ * @version 1.0.7
  * @license MIT
  */
 
@@ -15,19 +15,19 @@ use Symfony\Component\Yaml\Yaml;
 class Detector
 {
 	/**
-	 * @var string
+	 * @var string[]
 	 */
-	public static $rules = [];
+	public static array $rules = [];
 
 	/**
-	 * @var string
+	 * @var string[]
 	 */
-	public static $licenses = [];
+	public static array $licenses = [];
 
 	/**
 	 * @var array
 	 */
-	protected $paths = [
+	protected array $paths = [
 		'rules' => __DIR__ . '/../vendor/choosealicense.com/_data/rules.yml',
 		'licenses' => __DIR__ . '/../vendor/choosealicense.com/_licenses',
 	];
@@ -43,7 +43,7 @@ class Detector
 
 	/**
 	 */
-	public function fillRules()
+	public function fillRules(): void
 	{
 		if (!empty(self::$rules)) {
 			return;
@@ -65,7 +65,7 @@ class Detector
 
 	/**
 	 */
-	public function fillLicenses()
+	public function fillLicenses(): void
 	{
 		if (!empty(self::$licenses)) {
 			return;
@@ -86,7 +86,7 @@ class Detector
 	/**
 	 * @return LicenseDetector\License
 	 */
-	public function parseByPath($path)
+	public function parseByPath(string $path): License
 	{
 		if (!file_exists($path)) {
 			throw new \Exception('Error: LICENSE file not found.');
@@ -98,7 +98,7 @@ class Detector
 	/**
 	 * @return LicenseDetector\License
 	 */
-	public function parse(string $contents)
+	public function parse(string $contents): License
 	{
 		return new License($contents);
 	}

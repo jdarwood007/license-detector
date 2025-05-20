@@ -3,7 +3,7 @@
 /**
  * @package php-license-detector
  * @author Sami "SychO" Mazouz
- * @version 1.0
+ * @version 1.0.7
  * @license MIT
  */
 
@@ -17,12 +17,12 @@ class RuleType
 	/**
 	 * @var string
 	 */
-	protected $name;
+	protected string $name;
 
 	/**
 	 * @var string
 	 */
-	protected $rules = [];
+	protected array $rules = [];
 
 	/**
 	 * Constructor
@@ -41,7 +41,7 @@ class RuleType
 	/**
 	 * @param array $rules
 	 */
-	public function fillRules(array $rules)
+	public function fillRules(array $rules): void
 	{
 		if (empty($rules)) {
 			return;
@@ -67,22 +67,22 @@ class RuleType
 	/**
 	 * @return string
 	 */
-	public function getName()
+	public function getName(): string
 	{
 		return $this->name;
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
-	public function getRules()
+	public function getRules(): array
 	{
 		return $this->rules;
 	}
 
 	/**
 	 */
-	public function setRules(array $rules)
+	public function setRules(array $rules): void
 	{
 		$this->rules = $rules;
 	}
@@ -91,7 +91,7 @@ class RuleType
 	 * @param LicenseDetector\RuleType $rule_type
 	 * @return bool
 	 */
-	public function equals(RuleType $rule_type)
+	public function equals(RuleType $rule_type): bool
 	{
 		return (bool) ($this->name === $rule_type->name);
 	}

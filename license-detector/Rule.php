@@ -3,7 +3,7 @@
 /**
  * @package php-license-detector
  * @author Sami "SychO" Mazouz
- * @version 1.0
+ * @version 1.0.7
  * @license MIT
  */
 
@@ -17,32 +17,32 @@ class Rule
 	/**
 	 * @var array
 	 */
-	public const TYPES = ['permissions', 'limitations', 'conditions'];
+	public const array TYPES = ['permissions', 'limitations', 'conditions'];
 
 	/**
 	 * @var LicenseDetector\RuleType
 	 */
-	public $type;
+	public RuleType $type;
 
 	/**
 	 * @var string
 	 */
-	protected $tag;
+	protected string $tag;
 
 	/**
 	 * @var string
 	 */
-	protected $description;
+	protected string $description;
 
 	/**
 	 * @var string
 	 */
-	protected $label;
+	protected string $label;
 
 	/**
 	 * @var bool
 	 */
-	protected $value;
+	protected bool $value;
 
 	/**
 	 * Constructor
@@ -60,7 +60,7 @@ class Rule
 	/**
 	 * @return string
 	 */
-	public function getDescription()
+	public function getDescription(): string
 	{
 		return $this->description;
 	}
@@ -68,7 +68,7 @@ class Rule
 	/**
 	 * @return string
 	 */
-	public function getLabel()
+	public function getLabel(): string
 	{
 		return $this->label;
 	}
@@ -76,7 +76,7 @@ class Rule
 	/**
 	 * @return string
 	 */
-	public function getTag()
+	public function getTag(): string
 	{
 		return $this->tag;
 	}
@@ -84,7 +84,7 @@ class Rule
 	/**
 	 * @param bool $v
 	 */
-	public function setValue(bool $v)
+	public function setValue(bool $v): bool
 	{
 		$this->value = $v;
 	}

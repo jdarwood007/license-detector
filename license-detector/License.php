@@ -3,7 +3,7 @@
 /**
  * @package php-license-detector
  * @author Sami "SychO" Mazouz
- * @version 1.0.6
+ * @version 1.0.7
  * @license MIT
  */
 
@@ -20,87 +20,87 @@ class License extends \stdClass
 	/**
 	 * @var string
 	 */
-	public $title;
+	public string $title;
 
 	/**
 	 * @var string
 	 */
-	public $spdx_id;
+	public string $spdx_id;
 
 	/**
 	 * @var string
 	 */
-	public $redirect_from;
+	public string $redirect_from;
 
 	/**
 	 * @var string
 	 */
-	public $featured;
+	public string $featured;
 
 	/**
 	 * @var string
 	 */
-	public $hidden;
+	public string $hidden;
 
 	/**
 	 * @var string
 	 */
-	public $description;
+	public string $description;
 
 	/**
 	 * @var string
 	 */
-	public $how;
+	public string $how;
 
 	/**
 	 * @var string
 	 */
-	public $note;
+	public string $note;
 
 	/**
 	 * @var string
 	 */
-	public $nickname;
+	public string $nickname;
 
 	/**
 	 * @var array
 	 */
-	public $using = [];
+	public ?array $using = [];
 
 	/**
 	 * @var array
 	 */
-	public $rules = [];
+	public array $rules = [];
 
 	/**
 	 * @var array
 	 */
-	public $permissions = [];
+	public array $permissions = [];
 
 	/**
 	 * @var array
 	 */
-	public $conditions = [];
+	public array $conditions = [];
 
 	/**
 	 * @var array
 	 */
-	public $limitations = [];
+	public array $limitations = [];
 
 	/**
 	 * @var float
 	 */
-	public $stats = [];
+	public array $stats = [];
 
 	/**
 	 * @var string
 	 */
-	protected $contents;
+	protected string $contents;
 
 	/**
 	 * @var string
 	 */
-	protected $body;
+	protected string $body;
 
 	/**
 	 * Constructor
@@ -118,7 +118,7 @@ class License extends \stdClass
 	/**
 	 * @return string
 	 */
-	public function getContents()
+	public function getContents(): string
 	{
 		return $this->contents;
 	}
@@ -126,7 +126,7 @@ class License extends \stdClass
 	/**
 	 * @return string
 	 */
-	public function getBody()
+	public function getBody(): string
 	{
 		return $this->body;
 	}
@@ -134,7 +134,7 @@ class License extends \stdClass
 	/**
 	 * @return string
 	 */
-	public function setBody(string $body)
+	public function setBody(string $body): void
 	{
 		$this->body = $body;
 	}
@@ -142,7 +142,7 @@ class License extends \stdClass
 	/**
 	 * @var string
 	 */
-	public function getCleanBody()
+	public function getCleanBody(): string
 	{
 		return substr(preg_replace('/\s/s', '', $this->body), 0, 1000);
 	}
@@ -150,7 +150,7 @@ class License extends \stdClass
 	/**
 	 * @return array
 	 */
-	public function getAllRules()
+	public function getAllRules(): array
 	{
 		$rules = [];
 
@@ -163,7 +163,7 @@ class License extends \stdClass
 
 	/**
 	 */
-	public function parse()
+	public function parse(): void
 	{
 		preg_match_all('/---\s(.*)\n---\s+(.*)/s', $this->contents, $matches, PREG_SET_ORDER, 0);
 
@@ -188,7 +188,7 @@ class License extends \stdClass
 	/**
 	 * @param array $data
 	 */
-	public function setAdvanced(array $data)
+	public function setAdvanced(array $data): void
 	{
 		foreach ($data as $k => $v) {
 			$this->{str_replace('-', '_', $k)} = $v;
@@ -200,7 +200,7 @@ class License extends \stdClass
 	/**
 	 * @param array $data
 	 */
-	public function fillRules(array $data)
+	public function fillRules(array $data): void
 	{
 		foreach (Rule::TYPES as $type) {
 			if (!isset($data[$type])) {
@@ -223,7 +223,7 @@ class License extends \stdClass
 
 	/**
 	 */
-	public function matchToLicense()
+	public function matchToLicense(): void
 	{
 		foreach (Detector::$licenses as $license) {
 			similar_text($this->getCleanBody(), $license->getCleanBody(), $percent);
@@ -256,7 +256,7 @@ class License extends \stdClass
 	/**
 	 * @return bool
 	 */
-	public function isValid()
+	public function isValid(): bool
 	{
 		return !empty($this->title);
 	}
@@ -264,7 +264,7 @@ class License extends \stdClass
 	/**
 	 * @return string
 	 */
-	public function printDebug()
+	public function printDebug(): void
 	{
 		$echo = "\nMatched: " . ($this->title ?? '<em>None</em>') . "\n";
 		$echo .= 'Percentage: ' . ($this->stats['percentage'] ?? '0') . "%\n\n";
