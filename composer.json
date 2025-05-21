@@ -20,7 +20,7 @@
     "homepage": "https://sycho9.github.io",
     "require": {
         "php": ">=8.0.30",
-        "symfony/yaml": "^5.4"
+        "symfony/yaml": "^6.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.46",
@@ -36,5 +36,10 @@
     "scripts": {
         "lint": "php-cs-fixer check --diff --config .php-cs-fixer.dist.php --path-mode=intersection $(git diff --name-only \"*.php\")",
         "lint-fix": "php-cs-fixer fix -v --config .php-cs-fixer.dist.php --path-mode=intersection $(git diff --name-only \"*.php\")"
+    },
+    "config": {
+        "platform": {
+            "php": "8.0.30"
+        }
     }
 }
