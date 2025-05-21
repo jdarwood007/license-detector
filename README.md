@@ -1,16 +1,17 @@
 # license-detector
 A License information detector, inspired by [Licensee](https://github.com/licensee/licensee) and relies on data from [`choosealicense.com`](https://choosealicense.com/)
 
-![Travis (.org) branch](https://img.shields.io/travis/SychO9/license-detector/master?style=flat-square)
-![Latest Version](https://img.shields.io/github/release/SychO9/license-detector.svg?style=flat-square&color=orange)
-![php](https://img.shields.io/badge/php->=7.2-red.svg?style=flat-square&color=blue)
+![Build-cs](https://img.shields.io/github/actions/workflow/status/jdarwood007/license-detector/php-cs-fixer)
+![Build](https://img.shields.io/github/actions/workflow/status/jdarwood007/license-detector/php)
+![Latest Version](https://img.shields.io/github/release/jdarwood007/license-detector.svg?style=flat-square&color=orange)
+![php](https://img.shields.io/badge/php->=8.0-red.svg?style=flat-square&color=blue)
 ![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square&color=green)
 
 ## Installation
 Using Composer run the following
 
 ```gitattributes
-$ composer require sycho/license-detector
+$ composer require jdarwood007/license-detector
 ```
 
 ## Problem
