@@ -3,7 +3,7 @@
 /**
  * @package php-license-detector
  * @author Sami "SychO" Mazouz
- * @version 1.0.7
+ * @version 1.1.0
  * @license MIT
  */
 
