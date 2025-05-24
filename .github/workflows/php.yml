@@ -50,7 +50,7 @@ jobs:
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --ansi
+      run: composer install --no-progress --ansi
 
     - name: Lint PHP files
       run: vendor/bin/phplint -w --exclude .git --exclude vendor --ansi .
