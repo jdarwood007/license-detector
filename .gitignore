@@ -7,3 +7,4 @@ vendor/*
 # Files
 composer.phar
 .php-cs-fixer.cache
+.phplint.cache

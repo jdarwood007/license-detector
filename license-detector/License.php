@@ -15,8 +15,8 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Instantiates a license and matches it to the list of existing licenses
  */
-#[AllowDynamicProperties]
-class License extends \stdClass
+#[\AllowDynamicProperties]
+class License
 {
 	/**
 	 * @var string
@@ -108,7 +108,7 @@ class License extends \stdClass
 	 *
 	 * @param ?string $contents
 	 */
-	public function __construct(?string $contents = null): void
+	public function __construct(?string $contents = null)
 	{
 		if (!empty($contents)) {
 			$this->contents = $contents;
