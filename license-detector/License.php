@@ -6,6 +6,7 @@
  * @version 1.1.0
  * @license MIT
  */
+declare(strict_types=1);
 
 namespace LicenseDetector;
 
@@ -14,56 +15,56 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Instantiates a license and matches it to the list of existing licenses
  */
-#[AllowDynamicProperties]
-class License extends \stdClass
+#[\AllowDynamicProperties]
+class License
 {
 	/**
 	 * @var string
 	 */
-	public string $title;
+	public string $title = '';
 
 	/**
 	 * @var string
 	 */
-	public string $spdx_id;
+	public string $spdx_id = '';
 
 	/**
 	 * @var string
 	 */
-	public string $redirect_from;
+	public string $redirect_from = '';
+
+	/**
+	 * @var bool
+	 */
+	public bool $featured = false;
+
+	/**
+	 * @var bool
+	 */
+	public bool $hidden = false;
 
 	/**
 	 * @var string
 	 */
-	public string $featured;
+	public string $description = '';
 
 	/**
 	 * @var string
 	 */
-	public string $hidden;
+	public string $how = '';
 
 	/**
 	 * @var string
 	 */
-	public string $description;
+	public string $note = '';
 
 	/**
 	 * @var string
 	 */
-	public string $how;
+	public string $nickname = '';
 
 	/**
-	 * @var string
-	 */
-	public string $note;
-
-	/**
-	 * @var string
-	 */
-	public string $nickname;
-
-	/**
-	 * @var array
+	 * @var ?array
 	 */
 	public ?array $using = [];
 
@@ -95,17 +96,17 @@ class License extends \stdClass
 	/**
 	 * @var string
 	 */
-	protected string $contents;
+	protected string $contents = '';
 
 	/**
 	 * @var string
 	 */
-	protected string $body;
+	protected string $body = '';
 
 	/**
 	 * Constructor
 	 *
-	 * @param string $contents
+	 * @param ?string $contents
 	 */
 	public function __construct(?string $contents = null)
 	{

@@ -1,7 +1,6 @@
 name: PHP Check
 
 on:
-  push:
   pull_request:
 
 jobs:
@@ -29,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ 8.0, 8.1, 8.2, 8.3 ]
+        php: [ 8.1, 8.2, 8.3, 8.4 ]
 
     name: PHP ${{ matrix.php }} Syntax Check
     steps:
@@ -51,7 +50,7 @@ jobs:
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --ansi
+      run: composer install --no-progress --ansi
 
     - name: Lint PHP files
       run: vendor/bin/phplint -w --exclude .git --exclude vendor --ansi .

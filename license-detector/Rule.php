@@ -6,6 +6,7 @@
  * @version 1.1.0
  * @license MIT
  */
+declare(strict_types=1);
 
 namespace LicenseDetector;
 
