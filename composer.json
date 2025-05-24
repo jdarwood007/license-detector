@@ -16,7 +16,7 @@
     "keywords": ["license", "php"],
     "homepage": "https://sycho9.github.io",
     "require": {
-        "php": ">=8.0.2",
+        "php": ">=8.1.0",
         "symfony/yaml": "^5.4"
     },
     "require-dev": {
