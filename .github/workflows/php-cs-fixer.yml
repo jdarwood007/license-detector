@@ -1,5 +1,4 @@
 on:
-  push:
   pull_request:
 
 name: PHP Check
@@ -8,7 +7,19 @@ jobs:
     name: PHP-CS-Fixer
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #4.2.2
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #4.2.2
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf #4.2.2
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      if: steps.composer-cache.outputs.cache-hit != 'true'
+      run: composer install --prefer-dist --no-progress --ansi
 
       - name: Get changed files
         id: changed-files
